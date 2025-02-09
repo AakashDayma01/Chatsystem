@@ -1,0 +1,26 @@
+            <h3>Recent Activity</h3>
+            <hr>
+            {% for message in room_messages %}
+                <div>
+                    <small><a href="{% url 'user-profile' message.user.id %}">@{{message.user}}</a>  {{message.created|timesince}}</small>
+                    <small> before replied to "{{message.room}}"</small>
+                    {% if message.body %}
+                        <p>{{message.body}}</p>
+                    {% elif message.image %}
+                        <a href="{% url 'Room' message.room.id %}"><div>{{message.image}}</div></a>
+                    {% elif message.file %}
+                        <a href="{% url 'Room' message.room.id %}"><div>{{message.file}}</div></a>
+                    {% elif message.vidio%}
+                        <a href="{% url 'Room' message.room.id %}"><p>There is an vidio</p></a>
+                    {% elif message.link %}
+                        <a href="{{message.link}}"><div>{{message.link}}</div></a>
+                    {% elif message.audio %}
+                        <a href="{% url 'Room' message.room.id %}"><div>{{message.audio}}</div></a>
+                    {% endif %}
+
+                    {% if request.user == message.user %}
+                        <a href="{% url 'delete-message' message.id %}">Delete</a>
+                    {% endif %}
+                    <hr>
+                </div>
+            {% endfor %}

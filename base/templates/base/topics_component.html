@@ -1,0 +1,13 @@
+<div class="maindiv">
+    <hr>
+    <h3>Brouse Topics</h3>
+        <div class="Alldiv">
+            <h5><a href="{% url 'Home' %}">All</a></h5>
+        </div>
+        {% for topic in unique_topics %}
+        <div class="topic_name">
+            <h5><a href="{% url 'Home' %}?q={{topic}}">{{topic}}</a></h5>
+        </div>
+        {% endfor %}
+
+</div>

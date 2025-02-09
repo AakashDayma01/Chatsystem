@@ -1,0 +1,38 @@
+{% extends 'main.html' %}
+{% block content %}
+<h1>{{user.username}}</h1><img src="{{ user.image.url }}" alt="Profile Image" style="width: 150px; height: 150px; border-radius: 50%;">
+
+<p>Email: {{ user.email }}</p>
+<p>Phone Number: {{ user.phone_number }}</p>
+<p>Qualifications: {{ user.qualifications }}</p>
+<p>Address: {{ user.address }}</p>
+<h2>Your Rooms</h2>
+<ul>
+    {% for room in rooms %}
+        <li>{{ room.name }}</li>
+    {% endfor %}
+</ul>
+
+{% if request.user|stringformat:"s" == user.username|stringformat:"s"  %}
+    <a href="{% url 'update-profile' request.user.id %}"><h3>Update Profile</h3></a>
+{% endif %}
+<style>
+    .profile-container{
+        display: grid;
+        grid-template-columns: 1fr 3fr 1fr;
+    }
+</style>
+
+<div class="profile-container ">
+    <div>
+        {% include 'base/topics_component.html' %}
+    </div>
+    <div>
+        {% include 'base/feed_component.html' %}
+    </div>
+    <div>
+        {% include 'base/activity_component.html' %}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,77 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4; /* Light background for the entire page */
+    color: #333; /* Dark text color */
+}
+
+h1, h2, h3, h4, h5 {
+    color: #2c3e50; /* Dark color for headings */
+}
+
+/* Container Styles */
+.home-container {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr; /* Three-column layout */
+    gap: 20px; /* Space between columns */
+    max-width: 1200px; /* Maximum width for the container */
+    margin: auto; /* Center the container */
+    padding: 20px; /* Padding around the container */
+}
+
+/* Topic Component Styles */
+.maindiv {
+    background: #ffffff; /* White background for contrast */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    padding: 20px; /* Padding for inner spacing */
+}
+
+.maindiv h3 {
+    font-size: 24px; /* Larger font size for the header */
+    margin-bottom: 15px; /* Space below the header */
+    text-align: center; /* Center align the header */
+}
+
+/* Feed Component Styles */
+.feed {
+    background: #ffffff; /* White background for feed */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    padding: 20px; /* Padding for inner spacing */
+}
+
+.feed h5 {
+    margin-bottom: 10px; /* Space below the room title */
+}
+
+/* Activity Component Styles */
+.activity {
+    background: #ecf0f1; /* Light gray background for activity */
+    border-radius: 8px; /* Rounded corners */
+    padding: 15px; /* Padding for inner spacing */
+    margin-top: 20px; /* Space above the activity component */
+}
+
+/* Button Styles */
+.button {
+    background-color: #3498db; /* Blue background for buttons */
+    color: white; /* White text color */
+    padding: 10px 15px; /* Padding for buttons */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth background transition */
+}
+
+.button:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .home-container {
+        grid-template-columns: 1fr; /* Single column layout on small screens */
+    }
+}
