@@ -1,26 +1,161 @@
-            <h3>Recent Activity</h3>
-            <hr>
-            {% for message in room_messages %}
-                <div>
-                    <small><a href="{% url 'user-profile' message.user.id %}">@{{message.user}}</a>  {{message.created|timesince}}</small>
-                    <small> before replied to "{{message.room}}"</small>
-                    {% if message.body %}
-                        <p>{{message.body}}</p>
-                    {% elif message.image %}
-                        <a href="{% url 'Room' message.room.id %}"><div>{{message.image}}</div></a>
-                    {% elif message.file %}
-                        <a href="{% url 'Room' message.room.id %}"><div>{{message.file}}</div></a>
-                    {% elif message.vidio%}
-                        <a href="{% url 'Room' message.room.id %}"><p>There is an vidio</p></a>
-                    {% elif message.link %}
-                        <a href="{{message.link}}"><div>{{message.link}}</div></a>
-                    {% elif message.audio %}
-                        <a href="{% url 'Room' message.room.id %}"><div>{{message.audio}}</div></a>
-                    {% endif %}
+<div class="recent-activity">
+    <h3>Recent Activity</h3>
+    <hr>
+    <div class="activity-container">
+        {% for message in room_messages %}
+            <div class="activity-message">
+                <small>
+                    <a href="{% url 'user-profile' message.user.id %}" class="username">@{{ message.user }}</a>
+                    <span class="timestamp">{{ message.created|timesince }}</span>
+                </small>
+                <small> before replied to "<strong>{{ message.room }}</strong>"</small>
+                
+                {% if message.body %}
+                    <p class="message-body">{{ message.body }}</p>
+                {% elif message.image %}
+                    <a href="{% url 'Room' message.room.id %}">
+                        <div class="message-image">{{ message.image }}</div>
+                    </a>
+                {% elif message.file %}
+                    <a href="{% url 'Room' message.room.id %}">
+                        <div class="message-file">{{ message.file }}</div>
+                    </a>
+                {% elif message.vidio %}
+                    <a href="{% url 'Room' message.room.id %}">
+                        <p class="message-video">There is a video</p>
+                    </a>
+                {% elif message.link %}
+                    <a href="{{ message.link }}" class="message-link">
+                        <div>{{ message.link }}</div>
+                    </a>
+                {% elif message.audio %}
+                    <a href="{% url 'Room' message.room.id %}">
+                        <div class="message-audio">{{ message.audio }}</div>
+                    </a>
+                {% endif %}
+                
+                {% if request.user == message.user %}
+                    <a href="{% url 'delete-message' message.id %}" class="delete-button">Delete</a>
+                {% endif %}
+                <hr>
+            </div>
+        {% endfor %}
+    </div>
+</div>
 
-                    {% if request.user == message.user %}
-                        <a href="{% url 'delete-message' message.id %}">Delete</a>
-                    {% endif %}
-                    <hr>
-                </div>
-            {% endfor %}
+<style>
+    .recent-activity {
+        height: 82vh;
+        margin: 12% 8%; /* Center the container */
+        padding: 25px; /* Increased inner padding */
+        background-color: #ffffff; /* White background */
+        border-radius: 12px; /* Increased rounded corners */
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Deeper shadow for more depth */
+        transition: transform 0.2s; /* Smooth transition for on-hover effects */
+    }
+
+    .recent-activity:hover {
+        transform: translateY(-2px); /* Slight lift effect on hover */
+    }
+
+    .recent-activity h3 {
+        color: #5cb85c; /* Green color for headings */
+        font-size: 1.8rem; /* Increased font size for headings */
+        margin-bottom: 15px; /* Space below heading */
+        font-weight: 600; /* Semi-bold heading */
+        border-bottom: 2px solid #e0e0e0; /* Underline for the heading */
+        padding-bottom: 8px; /* Padding below heading */
+    }
+
+    .activity-container {
+        max-height: 400px; /* Set a fixed height for the scrolling area */
+        overflow-y: auto; /* Enable vertical scrolling */
+        overflow-x: hidden; /* Disable horizontal scrolling */
+    }
+
+    .activity-message {
+        margin-bottom: 20px; /* Increased space between messages */
+        padding: 15px; /* Padding for each message */
+        background-color: #f7f7f7; /* Light gray background for messages */
+        border-radius: 10px; /* Rounded corners for messages */
+        transition: background-color 0.3s; /* Smooth background transition */
+    }
+
+    .activity-message:hover {
+        background-color: #e9ffe9; /* Light green background on hover */
+    }
+
+    .activity-message small {
+        display: block; /* Make small text a block */
+        color: #666; /* Lighter gray for timestamps */
+        font-size: 0.9rem; /* Smaller text for timestamps */
+    }
+
+    .username {
+        color: #5cb85c; /* Link color for username */
+        text-decoration: none; /* Remove underline */
+        font-weight: bold; /* Bold text for username */
+        font-size: 1rem; /* Consistent font size for username */
+    }
+
+    .username:hover {
+        text-decoration: underline; /* Underline effect on hover */
+        color: #4cae4c; /* Darker green on hover */
+    }
+
+    .message-body {
+        font-size: 1rem; /* Regular font size */
+        margin-top: 8px; /* Space above message body */
+        color: #333; /* Darker color for message body */
+    }
+
+    .message-image, 
+    .message-file, 
+    .message-video, 
+    .message-link, 
+    .message-audio {
+        background-color: #ffffff; /* White background for media elements */
+        border: 1px solid #e0e0e0; /* Light gray border for contrast */
+        padding: 12px; /* Padding for media elements */
+        border-radius: 6px; /* Rounded corners for media */
+        margin-top: 10px; /* Space above media */
+        text-align: center; /* Center-align the media contents */
+    }
+
+    .delete-button {
+        color: #d9534f; /* Red color for delete button */
+        text-decoration: none; /* Remove underline */
+        float: right; /* Align delete button to the right */
+        font-weight: bold; /* Bold text for delete button */
+        transition: all 0.3s; /* Smooth transition for hover effects */
+    }
+
+    .delete-button:hover {
+        text-decoration: underline; /* Underline on hover */
+        color: #c9302c; /* Darker red on hover */
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .recent-activity {
+            padding: 15px; /* Reduced padding on small screens */
+        }
+
+        .activity-message {
+            margin-bottom: 15px; /* Adjust spacing on small screens */
+            padding: 10px; /* Reduced padding on messages */
+        }
+
+        .message-body {
+            font-size: 0.95rem; /* Slightly smaller font size on mobile */
+        }
+
+        .username {
+            font-size: 0.95rem; /* Consistency for username on small screens */
+        }
+
+        .delete-button {
+            font-size: 0.9rem; /* Smaller button font on mobile */
+        }
+    }
+</style>

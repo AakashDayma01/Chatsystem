@@ -20,11 +20,41 @@
         
             {% include 'base/topics_component.html' %}
             <div>
-            <h5>{{room_count}} rooms available</h5>
-            <a href="{% url 'create-room' %}">Create Room</a>
+                <div class="room-creation">
+                    <div>
+                    <a href="{% url 'create-room' %}" class="Create_room">Create Room</a>
+                    </div>
+                    <br>
+                    <div>
+                    <h3>{{room_count}} rooms available</h3>
+                    </div>
+                </div>
+            <style> 
+                .Create_room {
+                    border: 1px solid black;
+                    padding: 8px 15px; 
+                    font-size: 14px; 
+                    text-decoration: none;
+                    background-color: rgb(168, 168, 245);
+                    color: white; 
+                    border-radius: 5px; 
+                    transition: background-color 0.3s; 
+                    margin-left: 10px; 
+                }
+
+                .room-creation{
+                    margin: 7% 7% 0% 6%;
+                    padding: 2% 1% 0% 0%;
+                    border: 1px solid red ;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                }
+
+            </style>
             
             {% include 'base/feed_component.html' %}
-        </div>
+            </div>
 
         <div>
             {% include 'base/activity_component.html' %}
@@ -32,5 +62,7 @@
         </div>
     </div>
     {% endblock %}
+    
 </body>
+
 </html>

@@ -1,20 +1,140 @@
-<div>
-    {% if rooms%}
-    {% for room in rooms %}
-    <div>
-        {% if request.user == room.host %}
-        <a href="{% url 'update-room' room.id %}">Edit</a>
-        <a href="{% url 'delete-room' room.id %}">Delete</a>
+<div class="scrollable-container">
+    <div class="body">
+        {% if rooms %}
+        {% for room in rooms %}
+        <div class="room-card">
+            {% if room.host %}
+                <div class="user-data">
+                    <div class="user-profile">
+                        {% if room.host.image %}
+                            <img src="{{ room.host.image.url }}" alt="Profile Picture" class="profile">
+                        {% else %}
+                            <img src="default-profile.jpg" alt="Default Profile Picture" class="profile"> <!-- Placeholder for no image -->
+                        {% endif %}
+                    </div>
+                    <div class="user-name">
+                        <a href="{% url 'user-profile' room.host.id %}">@{{room.host.username}}</a>
+                    </div>
+                </div>
+            {% else %}
+                <span>No host available</span>
+            {% endif %}
+            <h4>{{room.id}} -- <a href="{% url 'Room' room.id %}">{{room.name}}</a></h4>
+            <br>
+            <small>{{room.topic.Topic_name}}</small>
+            <hr>
+
+            {% if request.user == room.host %}
+            <div class="host-permissions">
+                <a href="{% url 'update-room' room.id %}" class="button-edit">Edit</a>
+                <a href="{% url 'delete-room' room.id %}" class="button-delete">Delete</a>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
         {% endif %}
-        {% if room.host %}
-        <a href="{% url 'user-profile' room.host.id %}">@{{room.host.username}}</a>
-        {% else %}
-        <span>No host available</span>
-        {% endif %}
-        <h5>{{room.id}} -- <a href="{% url 'Room' room.id %}">{{room.name}}</a></h5>
-        <small>{{room.topic.Topic_name}}</small>
-        <hr>
     </div>
-    {% endfor %}
-    {% endif %}
 </div>
+<style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Includes padding/border within element's total width/height */
+}
+
+.scrollable-container {
+    height: 70vh; /* Set height to 70% of the viewport height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 1% 1% 5% 1%; /* Add some padding around the scrollable area */
+    border: 2px solid #ddd; /* Optional: Border around the scrollable area */
+    border-radius: 8px; /* Optional: Rounded corners */
+    background-color: #f8f9fa;
+    margin: 3% 7%; /* Optional: Light background color */
+}
+
+
+.body {
+    font-family: Arial, sans-serif; /* Fallback for better font rendering */
+    padding: 20px; /* Space inside the body */
+}
+
+.room-card {
+    border-radius: 5px;
+    border: 2px solid #ccc;
+    margin: 20px auto; /* Center align cards */
+    background-color: white;
+    color: black;
+    padding: 20px;
+    width: 95%; /* Full width with some margin */
+    max-width: 1000px; /* Maximum width constraint */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Create a shadow effect */
+    transition: transform 0.3s; /* Animation for hover effect */
+}
+
+.room-card:hover {
+    transform: scale(1.02); /* Scaling effect on hover */
+}
+
+.user-data {
+    display: flex; /* Use Flexbox for alignment */
+    align-items: center; /* Align items vertically centered */
+    margin-bottom: 15px; /* Spacing below user data */
+}
+
+.user-profile img {
+    width: 50px; /* Set fixed size for profile image */
+    height: 50px; /* Maintain aspect ratio */
+    border: 2px solid #ccc; /* Slightly lighter border */
+    border-radius: 50%; /* Circular profile images */
+    margin-right: 10px; /* Space between image and text */
+}
+
+.user-name {
+    font-weight: bold;
+}
+
+.host-permissions {
+    margin-top: 20px; /* Space above the buttons section */
+    display: flex; /* Use Flexbox for alignment */
+    justify-content: flex-end; /* Align buttons to the right */
+}
+
+.button-edit,
+.button-delete {
+    border: 1px solid black;
+    padding: 8px 15px; /* Slightly smaller padding for better fit */
+    font-size: 14px; /* Smaller font for the buttons */
+    text-decoration: none;
+    background-color: rgb(168, 168, 245);
+    color: white; /* Button text color */
+    border-radius: 5px; /* Rounded corners for buttons */
+    transition: background-color 0.3s; /* Animation for background */
+    margin-left: 10px; /* Space between buttons */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Create a shadow effect */
+    transition: transform 0.3s;
+}
+
+.button-edit:hover,
+.button-delete:hover {
+    background-color: rgba(255, 0, 0, 0.7); /* Change background on hover */
+    transform: scale(1.12); /* Scaling effect on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .room-card {
+        width: 95%; /* Full width on smaller screens */
+    }
+
+    .user-profile img {
+        width: 40px; /* Smaller profile image on mobile */
+        height: 40px; /* Maintain aspect ratio */
+    }
+
+    .button-edit,
+    .button-delete {
+        padding: 6px 12px; /* Smaller button on mobile */
+        font-size: 12px; /* Smaller font on mobile */
+    }
+}
+</style>

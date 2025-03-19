@@ -1,13 +1,76 @@
 <div class="maindiv">
     <hr>
     <h3>Brouse Topics</h3>
-        <div class="Alldiv">
-            <h5><a href="{% url 'Home' %}">All</a></h5>
-        </div>
-        {% for topic in unique_topics %}
-        <div class="topic_name">
-            <h5><a href="{% url 'Home' %}?q={{topic}}">{{topic}}</a></h5>
-        </div>
-        {% endfor %}
-
+    <div class="Alldiv">
+        <h5><a href="{% url 'Home' %}">All</a></h5>
+    </div>
+    {% for topic in unique_topics %}
+    <div class="topic_name">
+        <h5><a href="{% url 'Home' %}?q={{topic}}">{{topic}}</a></h5>
+    </div>
+    {% endfor %}
 </div>
+<style>
+
+    /* General styling */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+
+h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #343a40;
+}
+
+.Alldiv {
+    margin-bottom: 10px;
+}
+
+.maindiv {
+    height: 82vh; /* Set height to 70% of the viewport height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    margin: 18% 5% 15% 10%; /* Center the container */
+    padding: 20px; /* Add some padding around the scrollable area */
+    border: 2px solid #ddd; /* Optional: Border around the scrollable area */
+    border-radius: 8px; /* Optional: Rounded corners */
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.topic_name {
+    margin: 10px 0;
+    text-align: center;
+}
+
+h5 a {
+    text-decoration: none;
+    color: #007bff;
+    transition: color 0.3s;
+}
+
+h5 a:hover {
+    color: #0056b3;
+}
+
+/* Responsive styling */
+@media screen and (max-width: 600px) {
+    h3 {
+        font-size: 1.5em;
+    }
+
+    h5 {
+        font-size: 1.2em;
+    }
+}
+
+</style>
